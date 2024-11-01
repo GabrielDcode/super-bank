@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: node-libs-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: node-libs
+          image: your_registry/node-libs:latest
+          command: ["npm", "install"]
+          volumeMounts:
+            - mountPath: /usr/src/app/node_modules
+              name: node-modules-volume
+      restartPolicy: OnFailure
+      volumes:
+        - name: node-modules-volume
+          persistentVolumeClaim:
+            claimName: node-modules-pvc
