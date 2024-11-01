@@ -6,13 +6,15 @@ spec:
   template:
     spec:
       containers:
-        - name: node-libs
-          image: your_registry/node-libs:latest
+        - name: node-libs-container
+          image: ghcr.io/gabrieldcode/node-libs:latest
           command: ["npm", "install"]
           volumeMounts:
             - mountPath: /usr/src/app/node_modules
               name: node-modules-volume
       restartPolicy: OnFailure
+      imagePullSecrets:
+        - name: ghcr-cred        
       volumes:
         - name: node-modules-volume
           persistentVolumeClaim:
